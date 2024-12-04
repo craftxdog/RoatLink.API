@@ -13,7 +13,7 @@ public class PrecioService
 
         // To count the total accessories.
         decimal porcentajeChange = 0;
-        foreach (var accesorio in vehiculo.Accesorio)
+        foreach (var accesorio in vehiculo.Accesorio!)
         {
             porcentajeChange += accesorio switch
             {
@@ -34,7 +34,7 @@ public class PrecioService
         var precioTotal = Moneda.Zero();
         precioTotal += precioPorPeriodo;
 
-        if (!vehiculo!.Mantenimiento!.IsZero())
+        if (!vehiculo.Mantenimiento!.IsZero())
         {
             precioTotal += vehiculo.Mantenimiento;
         }
