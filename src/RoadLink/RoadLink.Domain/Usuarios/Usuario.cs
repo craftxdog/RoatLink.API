@@ -3,14 +3,14 @@ using RoadLink.Domain.Usuarios.Events;
 
 namespace RoadLink.Domain.Usuarios;
 // Buen ejemplo de encapsulacion.
-public sealed class Usuario : Entity
+public sealed class Usuario : Entity<UsuarioId>
 {
     private Usuario()
     {
     }
 
     private Usuario(
-        Guid id,
+        UsuarioId id,
         Nombre nombre,
         Apellido apellido,
         Email email
@@ -26,7 +26,7 @@ public sealed class Usuario : Entity
 
     public static Usuario Create(Nombre nombre, Apellido apellido, Email email)
     {
-        var usuario = new Usuario(Guid.NewGuid(), nombre, apellido, email);
+        var usuario = new Usuario(UsuarioId.New(), nombre, apellido, email);
         usuario.RaiseDomainEvent(new UserCreatedDomainEvent(usuario.Id)); //This is a publisher "Publishing a event"
         return usuario;
     }

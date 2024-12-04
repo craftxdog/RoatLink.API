@@ -3,7 +3,7 @@ using RoadLink.Domain.Shared;
 
 namespace RoadLink.Domain.Vehiculos;
 
-public sealed class Vehiculo : Entity
+public sealed class Vehiculo : Entity<VehiculoId>
 {
     private Vehiculo()
     {
@@ -11,7 +11,7 @@ public sealed class Vehiculo : Entity
 
     public Vehiculo
     (
-        Guid id,
+        VehiculoId id,
         Modelo modelo,
         Vin vin,
         Moneda precio,
@@ -34,6 +34,6 @@ public sealed class Vehiculo : Entity
     public Moneda? Precio { get; private set; }
     public Moneda? Mantenimiento { get; private set; }
     public DateTime? FechaUltimoAlquiler { get; internal set; }
-    public List<Accesorio> Accesorio { get; private set; }
+    public List<Accesorio>? Accesorio { get; private set; }
     public Direccion? Direccion { get; private set; }
 }

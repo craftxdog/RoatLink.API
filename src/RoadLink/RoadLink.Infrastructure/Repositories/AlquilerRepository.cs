@@ -4,7 +4,7 @@ using RoadLink.Domain.Vehiculos;
 
 namespace RoadLink.Infrastructure.Repositories;
 
-internal sealed class AlquilerRepository : Repository<Alquiler>, IAlquilerRepository
+internal sealed class AlquilerRepository : Repository<Alquiler, AlquilerId>, IAlquilerRepository
 {
     private readonly AlquilerStatus[] ActiveAlquilerStatuses =
     {
@@ -17,12 +17,12 @@ internal sealed class AlquilerRepository : Repository<Alquiler>, IAlquilerReposi
     }
 
     public async Task<bool> IsOverlappingAsync(
-        Vehiculo vehiculo, 
-        DateRange duracion, 
+        Vehiculo vehiculo,
+        DateRange duracion,
         CancellationToken cancellationToken = default)
     {
-        return await DbContext.Set<Alquiler>().AnyAsync(a => a.VehiculoId == vehiculo.Id && 
-                                                             a.DuracionAlquiler.Inicio <= a.DuracionAlquiler.Termino 
+        return await DbContext.Set<Alquiler>().AnyAsync(a => a.VehiculoId == vehiculo.Id &&
+                                                             a.DuracionAlquiler.Inicio <= a.DuracionAlquiler.Termino
                                                              && a.DuracionAlquiler.Termino >= a.DuracionAlquiler.Inicio &&
                                                              ActiveAlquilerStatuses.Contains(a.Status), cancellationToken);
     }

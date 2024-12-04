@@ -4,7 +4,7 @@ namespace RoadLink.Domain.Alquileres;
 
 public interface IAlquilerRepository
 {
-    Task<Alquiler?> GetByIdAsync(Guid alquilerId, CancellationToken cancellationToken = default);
+    Task<Alquiler?> GetByIdAsync(AlquilerId alquilerId, CancellationToken cancellationToken = default);
     Task<bool> IsOverlappingAsync(
         Vehiculo vehiculo,
         DateRange duracion,

@@ -5,16 +5,16 @@ using RoadLink.Domain.Vehiculos;
 
 namespace RoadLink.Domain.Alquileres;
 // Expert domain is how know all about the busyness.
-public sealed class Alquiler : Entity
+public sealed class Alquiler : Entity<AlquilerId>
 {
     private Alquiler()
     {
     }
 
     private Alquiler(
-        Guid id,
-        Guid vehiculoId,
-        Guid usuarioId,
+        AlquilerId id,
+        VehiculoId vehiculoId,
+        Usuarios.UsuarioId usuarioId,
         DateRange duracionAlquiler,
         Moneda precioPorPeriodo,
         Moneda precioMantenimiento,
@@ -34,17 +34,17 @@ public sealed class Alquiler : Entity
         Status = status;
         FechaCreacionAlquiler = fechaCreacionAlquiler;
     }
-    public Guid VehiculoId { get; private set; }
-    public Guid UsuarioId { get; private set; }
-    
+    public VehiculoId? VehiculoId { get; private set; }
+    public Usuarios.UsuarioId? UsuarioId { get; private set; }
+
     public Moneda? PrecioPorPeriodo { get; private set; }
     public Moneda? PrecioMantenimiento { get; private set; }
     public Moneda? Accesorios { get; private set; }
     public Moneda? PrecioTotal { get; private set; }
-    
+
     public AlquilerStatus Status { get; private set; }
-    public DateRange DuracionAlquiler { get; private set; }
-    
+    public DateRange? DuracionAlquiler { get; private set; }
+
     public DateTime? FechaCreacionAlquiler { get; private set; }
     public DateTime? FechaConfirmacionAlquiler { get; private set; }
     public DateTime? FechaDeNegacion { get; private set; }
@@ -57,7 +57,7 @@ public sealed class Alquiler : Entity
 
     public static Alquiler Reservar(
         Vehiculo vehiculo,
-        Guid usuarioId,
+        Usuarios.UsuarioId usuarioId,
         DateRange duracionAlquiler,
         DateTime fechaCreacionAlquiler,
         PrecioService precioService
@@ -65,8 +65,8 @@ public sealed class Alquiler : Entity
     {
         var precioDetalle = precioService.CalcularPrecio(vehiculo, duracionAlquiler);
         var alquiler = new Alquiler(
-            Guid.NewGuid(),
-            vehiculo.Id,
+            AlquilerId.New(),
+            vehiculo.Id!,
             usuarioId,
             duracionAlquiler,
             precioDetalle.PrecioPorPeriodo,
@@ -91,7 +91,7 @@ public sealed class Alquiler : Entity
 
         Status = AlquilerStatus.Confirmado;
         FechaConfirmacionAlquiler = utcNow;
-        RaiseDomainEvent(new AlquilerConfirmadoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerConfirmadoDomainEvent(Id!));
 
         return Result.Success();
     }
@@ -104,7 +104,7 @@ public sealed class Alquiler : Entity
         }
         Status = AlquilerStatus.Rechazado;
         FechaDeNegacion = utcNow;
-        RaiseDomainEvent(new AlquilerRechazadoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerRechazadoDomainEvent(Id!));
         return Result.Success();
     }
 
@@ -115,16 +115,16 @@ public sealed class Alquiler : Entity
             return Result.Failure(AlquilerErrors.NotConfirmed);
         }
         var currentDate = DateOnly.FromDateTime(utcNow);
-        if (currentDate > DuracionAlquiler.Inicio)
+        if (currentDate > DuracionAlquiler!.Inicio)
         {
             return Result.Failure(AlquilerErrors.AlreadyStarted);
         }
         Status = AlquilerStatus.Cancelado;
         FechaCancelacionAlquiler = utcNow;
-        RaiseDomainEvent(new AlquilerCanceladoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerCanceladoDomainEvent(Id!));
         return Result.Success();
     }
-    
+
     public Result Completado(DateTime utcNow)
     {
         if (Status != AlquilerStatus.Confirmado)
@@ -133,7 +133,7 @@ public sealed class Alquiler : Entity
         }
         Status = AlquilerStatus.Completado;
         FechaCompletoAlquiler = utcNow;
-        RaiseDomainEvent(new AlquilerCompletadoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerCompletadoDomainEvent(Id!));
         return Result.Success();
     }
 }

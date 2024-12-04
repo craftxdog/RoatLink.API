@@ -9,8 +9,8 @@ namespace RoadLink.Application.Alquileres.ReservarAlquiler;
 public sealed class ReservarAlquilerDomainHandler : INotificationHandler<AlquilerReservadoDomainEvent>
 {
     public ReservarAlquilerDomainHandler(
-        IAlquilerRepository alquilerRepository, 
-        IUsuarioRepository usuarioRepository, 
+        IAlquilerRepository alquilerRepository,
+        IUsuarioRepository usuarioRepository,
         IEmailService emailService
         )
     {
@@ -22,7 +22,7 @@ public sealed class ReservarAlquilerDomainHandler : INotificationHandler<Alquile
     private readonly IAlquilerRepository _alquilerRepository;
     private readonly IUsuarioRepository _usuarioRepository;
     private readonly IEmailService _emailService;
-    
+
     public async Task Handle(AlquilerReservadoDomainEvent notification, CancellationToken cancellationToken)
     {
         var alquiler = await _alquilerRepository.GetByIdAsync(notification.AlquilerId, cancellationToken);

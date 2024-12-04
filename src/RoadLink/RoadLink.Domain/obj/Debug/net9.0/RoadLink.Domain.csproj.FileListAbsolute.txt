@@ -10,3 +10,4 @@
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.pdb
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/ref/RoadLink.Domain.dll
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.csproj.AssemblyReference.cache
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.sourcelink.json

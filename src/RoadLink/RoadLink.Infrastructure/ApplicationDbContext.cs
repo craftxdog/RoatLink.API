@@ -8,7 +8,7 @@ namespace RoadLink.Infrastructure;
 public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 {
     private readonly IPublisher _publisher;
-    public ApplicationDbContext(DbContextOptions options, IPublisher publisher): base(options)
+    public ApplicationDbContext(DbContextOptions options, IPublisher publisher) : base(options)
     {
         _publisher = publisher;
     }
@@ -31,13 +31,13 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         {
             throw new ConcurrencyException("La excepcion por concurrencia se disparo", ex);
         }
-        
+
     }
 
     private async Task PublishDomainEventsAsync()
     {
         var domainEvents = ChangeTracker
-            .Entries<Entity>().Select(entry => entry.Entity).SelectMany(entity =>
+            .Entries<IEntity>().Select(entry => entry.Entity).SelectMany(entity =>
             {
                 var domainEvents = entity.GetDomainEvents();
                 entity.ClearDomainEvents();

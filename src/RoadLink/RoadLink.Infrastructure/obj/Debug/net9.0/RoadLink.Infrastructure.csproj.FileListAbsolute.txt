@@ -17,3 +17,4 @@
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Infrastructure/obj/Debug/net9.0/RoadLink.Infrastructure.pdb
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Infrastructure/obj/Debug/net9.0/RoadLink.Infrastructure.genruntimeconfig.cache
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Infrastructure/obj/Debug/net9.0/ref/RoadLink.Infrastructure.dll
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Infrastructure/obj/Debug/net9.0/RoadLink.Infrastructure.sourcelink.json

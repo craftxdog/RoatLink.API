@@ -14,24 +14,26 @@ public sealed class AlquilerConfiguration : IEntityTypeConfiguration<Alquiler>
         builder.ToTable("alquileres");
         builder.HasKey(c => c.Id);
 
+        builder.Property(alquiler => alquiler.Id).HasConversion(alquilerId => alquilerId.Value, value => new AlquilerId(value));
+
         builder.OwnsOne(a => a.PrecioPorPeriodo, precioBuilder =>
         {
             precioBuilder.Property(moneda => moneda.TipoMoneda)
                 .HasConversion(tipoMoneda => tipoMoneda.Codigo, codigo => TipoMoneda.FromCodigo(codigo!));
         });
-        
+
         builder.OwnsOne(a => a.PrecioMantenimiento, precioBuilder =>
         {
             precioBuilder.Property(moneda => moneda.TipoMoneda)
                 .HasConversion(tipoMoneda => tipoMoneda.Codigo, codigo => TipoMoneda.FromCodigo(codigo!));
         });
-        
+
         builder.OwnsOne(a => a.Accesorios, precioBuilder =>
         {
             precioBuilder.Property(moneda => moneda.TipoMoneda)
                 .HasConversion(tipoMoneda => tipoMoneda.Codigo, codigo => TipoMoneda.FromCodigo(codigo!));
         });
-        
+
         builder.OwnsOne(a => a.PrecioTotal, precioBuilder =>
         {
             precioBuilder.Property(moneda => moneda.TipoMoneda)
@@ -41,6 +43,6 @@ public sealed class AlquilerConfiguration : IEntityTypeConfiguration<Alquiler>
         builder.OwnsOne(a => a.DuracionAlquiler);
         builder.HasOne<Vehiculo>().WithMany().HasForeignKey(a => a.VehiculoId);
         builder.HasOne<Usuario>().WithMany().HasForeignKey(a => a.UsuarioId);
-        
+
     }
 }

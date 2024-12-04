@@ -11,10 +11,10 @@ namespace RoadLink.Application.Alquileres.ReservarAlquiler;
 internal sealed class ReservarAlquilerCommandHandler : ICommandHandler<ReservarAlquilerCommand, Guid>
 {
     public ReservarAlquilerCommandHandler(
-        IUsuarioRepository usuarioRepository, 
-        IVehiculoRepository vehiculoRepository, 
-        IAlquilerRepository alquilerRepository, 
-        PrecioService precioService, 
+        IUsuarioRepository usuarioRepository,
+        IVehiculoRepository vehiculoRepository,
+        IAlquilerRepository alquilerRepository,
+        PrecioService precioService,
         IUnitOfWork unitOfWork,
         IDateTimeProvider dateTimeProvider
         )
@@ -33,17 +33,19 @@ internal sealed class ReservarAlquilerCommandHandler : ICommandHandler<ReservarA
     private readonly PrecioService _precioService;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IDateTimeProvider _dateTimeProvider;
-    
+
     public async Task<Result<Guid>> Handle(
-        ReservarAlquilerCommand request, 
+        ReservarAlquilerCommand request,
         CancellationToken cancellationToken)
     {
-        var usuario = await _usuarioRepository.GetByIdAsync(request.UsuarioId, cancellationToken);
+        var usuarioId = new UsuarioId(request.UsuarioId);
+        var usuario = await _usuarioRepository.GetByIdAsync(usuarioId, cancellationToken);
         if (usuario is null)
         {
             return Result.Failure<Guid>(UsuariosErrors.NotFound);
         }
-        var vehiculo = await _vehiculoRepository.GetByIdAsync(request.VehiculoId, cancellationToken);
+        var vehiculoId = new VehiculoId(request.VehiculoId);
+        var vehiculo = await _vehiculoRepository.GetByIdAsync(vehiculoId, cancellationToken);
         if (vehiculo is null)
         {
             return Result.Failure<Guid>(VehiculosErrors.NotFound);
@@ -61,13 +63,13 @@ internal sealed class ReservarAlquilerCommandHandler : ICommandHandler<ReservarA
             var alquiler = Alquiler.Reservar(vehiculo, usuario.Id, duracion, _dateTimeProvider.currentTime, _precioService);
             _alquilerRepository.Add(alquiler);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return alquiler.Id;
+            return alquiler.Id.Value;
         }
         catch (ConcurrencyException)
         {
             return Result.Failure<Guid>(AlquilerErrors.Overlap);
         }
 
-        
+
     }
 }

@@ -13,3 +13,4 @@
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Application/obj/Debug/net9.0/refint/RoadLink.Application.dll
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Application/obj/Debug/net9.0/RoadLink.Application.pdb
 /Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Application/obj/Debug/net9.0/ref/RoadLink.Application.dll
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Application/obj/Debug/net9.0/RoadLink.Application.sourcelink.json
