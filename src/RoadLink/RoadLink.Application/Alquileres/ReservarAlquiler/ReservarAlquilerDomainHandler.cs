@@ -30,7 +30,7 @@ public sealed class ReservarAlquilerDomainHandler : INotificationHandler<Alquile
         {
             return;
         }
-        var usuario = await _usuarioRepository.GetByIdAsync(alquiler.UsuarioId, cancellationToken);
+        var usuario = await _usuarioRepository.GetByIdAsync(alquiler.UsuarioId!, cancellationToken);
         if (usuario is null)
         {
             return;

@@ -49,14 +49,14 @@ public sealed class Comentario : Entity<ComentarioId>
 
         var comentario = new Comentario(
             ComentarioId.New(),
-            alquiler.VehiculoId,
-            alquiler.Id,
-            alquiler.UsuarioId,
+            alquiler.VehiculoId!,
+            alquiler.Id!,
+            alquiler.UsuarioId!,
             rating,
             description,
             fechaHoraCreacion
         );
-        comentario.RaiseDomainEvent(new ComentarioCreatedDomainEvent(comentario.Id));
+        comentario.RaiseDomainEvent(new ComentarioCreatedDomainEvent(comentario.Id!));
         return comentario;
     }
 }
