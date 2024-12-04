@@ -11,7 +11,7 @@ public sealed class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
         builder.ToTable("usuario");
         builder.HasKey(u => u.Id);
 
-        builder.Property(usuario => usuario.Id).HasConversion(UsuarioId => UsuarioId.Value, value => new UsuarioId(value));
+        builder.Property(usuario => usuario.Id).HasConversion(usuarioId => usuarioId!.Value, value => new UsuarioId(value));
 
 
         builder.Property(u => u.Nombre).HasMaxLength(200)

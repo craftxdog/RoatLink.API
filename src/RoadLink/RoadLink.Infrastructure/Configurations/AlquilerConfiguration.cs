@@ -14,7 +14,7 @@ public sealed class AlquilerConfiguration : IEntityTypeConfiguration<Alquiler>
         builder.ToTable("alquileres");
         builder.HasKey(c => c.Id);
 
-        builder.Property(alquiler => alquiler.Id).HasConversion(alquilerId => alquilerId.Value, value => new AlquilerId(value));
+        builder.Property(alquiler => alquiler.Id).HasConversion(alquilerId => alquilerId!.Value, value => new AlquilerId(value));
 
         builder.OwnsOne(a => a.PrecioPorPeriodo, precioBuilder =>
         {

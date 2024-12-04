@@ -12,7 +12,7 @@ public sealed class VehiculoConfiguration : IEntityTypeConfiguration<Vehiculo>
         builder.ToTable("vehiculos");
         builder.HasKey(x => x.Id);
 
-        builder.Property(vehiculo => vehiculo.Id).HasConversion(vehiculoId => vehiculoId.Value, value => new VehiculoId(value));
+        builder.Property(vehiculo => vehiculo.Id).HasConversion(vehiculoId => vehiculoId!.Value, value => new VehiculoId(value));
 
         builder.OwnsOne(v => v.Direccion);
         builder.Property(vehiculo => vehiculo.Modelo).HasMaxLength(200).HasConversion(modelo => modelo!.Value, value => new Modelo(value));

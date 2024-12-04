@@ -22,7 +22,7 @@ internal sealed class AlquilerRepository : Repository<Alquiler, AlquilerId>, IAl
         CancellationToken cancellationToken = default)
     {
         return await DbContext.Set<Alquiler>().AnyAsync(a => a.VehiculoId == vehiculo.Id &&
-                                                             a.DuracionAlquiler.Inicio <= a.DuracionAlquiler.Termino
+                                                             a.DuracionAlquiler!.Inicio <= a.DuracionAlquiler.Termino
                                                              && a.DuracionAlquiler.Termino >= a.DuracionAlquiler.Inicio &&
                                                              ActiveAlquilerStatuses.Contains(a.Status), cancellationToken);
     }
