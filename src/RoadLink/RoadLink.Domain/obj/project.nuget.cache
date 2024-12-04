@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "WIi1pEiJf0k=",
+  "success": true,
+  "projectFilePath": "/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/RoadLink.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/macbookpro/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

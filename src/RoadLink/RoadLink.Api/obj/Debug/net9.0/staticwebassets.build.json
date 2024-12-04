@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "NyPX4SPsRzmtZpxhdjgMI0GNEaK3zGxdP+7/uoSVMUk=",
+  "Source": "RoatLink.Api",
+  "BasePath": "_content/RoatLink.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

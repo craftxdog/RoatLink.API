@@ -1,0 +1,12 @@
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/bin/Debug/net9.0/RoadLink.Domain.deps.json
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/bin/Debug/net9.0/RoadLink.Domain.dll
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/bin/Debug/net9.0/RoadLink.Domain.pdb
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.AssemblyInfoInputs.cache
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.AssemblyInfo.cs
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.csproj.CoreCompileInputs.cache
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.dll
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/refint/RoadLink.Domain.dll
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.pdb
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/ref/RoadLink.Domain.dll
+/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Domain/obj/Debug/net9.0/RoadLink.Domain.csproj.AssemblyReference.cache
