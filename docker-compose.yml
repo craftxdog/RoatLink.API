@@ -1,0 +1,9 @@
+services:
+  roatlinkdb:
+    image: postgres:16.0
+    
+  roatlinkapi:
+    image: ${DOCKER_REGISTERY-}roatlinkapi
+    build:
+      context: .
+      dockerfile: src/RoadLink/RoadLink.Api/Dockerfile

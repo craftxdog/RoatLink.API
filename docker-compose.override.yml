@@ -1,0 +1,23 @@
+services:
+  roatlinkdb:
+    container_name: roatlinkdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=roatlink
+    restart: always
+    volumes:
+      - ./.containers/database:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+        
+  roatlinkapi:
+    container_name: roatlinkapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - "ConnectionStrings__ConnectionString=Host=roatlinkdb;Port=5432;Database=roatlink;Username=postgres;Password=postgres"
+    depends_on:
+      - roatlinkdb
+    ports:
+      - 80:5000

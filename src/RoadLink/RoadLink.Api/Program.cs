@@ -1,9 +1,22 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using RoadLink.Application;
+using RoadLink.Application.Abstractions.Authentication;
 using RoadLink.Infrastructure;
+using RoadLink.Infrastructure.Authentication;
 using RoatLink.Api.Extensions;
+using RoatLink.Api.OptionsSetup;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllers();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
+builder.Services.AddTransient<IJwtProvider, JwtProvider>();
+builder.Services.AddAuthorization();
 
 builder.Services.AddOpenApi();
 
@@ -23,11 +36,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
-app.ApplyMigrations();
+await app.ApplyMigrations();
 app.SeedData();
-app.useCustomExceptionHandler();
+app.SeedDataAuthentication();
+
+app.UseCustomExceptionHandler();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

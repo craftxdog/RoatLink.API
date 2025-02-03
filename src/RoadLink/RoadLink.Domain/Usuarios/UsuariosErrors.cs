@@ -11,6 +11,10 @@ public static class UsuariosErrors
 
     public static Error InvalidCredentials = new(
         "Usuario.InvalidCredentials",
-        "Las credenciales son incorrectas"
+        "Las credenciales son incorrectas."
+    );
+    public static Error AlreadyExists = new(
+        "Usuario.AlreadyExists",
+        "El usuario ya existe."
     );
 }

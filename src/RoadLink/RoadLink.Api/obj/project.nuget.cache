@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "kGJT5h0fn2I=",
+  "dgSpecHash": "A9svKDUryws=",
   "success": true,
   "projectFilePath": "/Users/macbookpro/Documents/Projects/RoadLink/src/RoadLink/RoadLink.Api/RoatLink.Api.csproj",
   "expectedPackageFiles": [
+    "/Users/macbookpro/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/bogus/35.6.1/bogus.35.6.1.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/dapper/2.1.15/dapper.2.1.15.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/efcore.namingconventions/9.0.0/efcore.namingconventions.9.0.0.nupkg.sha512",

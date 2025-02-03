@@ -1,12 +1,58 @@
 using Bogus;
 using Dapper;
 using RoadLink.Application.Abstractions.Data;
+using RoadLink.Domain.Usuarios;
 using RoadLink.Domain.Vehiculos;
+using RoadLink.Infrastructure;
 
 namespace RoatLink.Api.Extensions;
 
 public static class SeedDataExtension
 {
+
+    public static void SeedDataAuthentication(
+        this IApplicationBuilder app
+    )
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var serviceProvider = scope.ServiceProvider;
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+        try
+        {
+            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            if (!context.Set<Usuario>().Any())
+            {
+                var passwordHasher = BCrypt.Net.BCrypt.HashPassword("tester123456");
+
+                var usuario = Usuario.Create(
+                new Nombre("Erwing"),
+                new Apellido("Pagganini"),
+                new Email("Erwing@gmail.com"),
+                new PasswordHash(passwordHasher)
+                    );
+                context.Add(usuario);
+                
+                passwordHasher = BCrypt.Net.BCrypt.HashPassword("Admin123456");
+
+                usuario = Usuario.Create(
+                    new Nombre("Aaron"),
+                    new Apellido("Masserati"),
+                    new Email("Aaron@gmail.com"),
+                    new PasswordHash(passwordHasher)
+                );
+                context.Add(usuario);
+
+                context.SaveChangesAsync().Wait();
+            }
+        }
+        catch (Exception e)
+        {
+            var logger = loggerFactory.CreateLogger<ApplicationDbContext>();
+            logger.LogError(e, e.Message);
+        }
+    }
+    
     public static void SeedData(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.CreateScope();
@@ -16,7 +62,7 @@ public static class SeedDataExtension
         var faker = new Faker();
         List<object> vehiculos = new();
 
-        for (var i = 0; i < 100; i++)
+        for (var i = 0; i < 150; i++)
         {
             vehiculos.Add(new
             {
@@ -48,4 +94,5 @@ public static class SeedDataExtension
                            """;
         connection.Execute(sql, vehiculos);
     }
+    
 }

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using RoadLink.Infrastructure;
 using RoatLink.Api.Middleware;
@@ -7,7 +6,7 @@ namespace RoatLink.Api.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static async void ApplyMigrations(this IApplicationBuilder app)
+    public static async Task ApplyMigrations(this IApplicationBuilder app)
     {
         using (var scope = app.ApplicationServices.CreateScope())
         {
@@ -26,7 +25,7 @@ public static class ApplicationBuilderExtensions
         }
     }
 
-    public static void useCustomExceptionHandler(this IApplicationBuilder app)
+    public static void UseCustomExceptionHandler(this IApplicationBuilder app)
     {
         app.UseMiddleware<ExceptionHandlingMiddleware>();
     }

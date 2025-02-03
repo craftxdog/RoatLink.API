@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RoadLink.Application.Vehiculos.SearchVehiculos;
 
@@ -15,7 +16,8 @@ public class VehiculoController : ControllerBase
         _sender = sender;
     }
 
-    [HttpGet]
+    [Authorize]
+    [HttpGet("search")]
     public async Task<IActionResult> SearchVehiculos(
         DateOnly startDate,
         DateOnly endDate,

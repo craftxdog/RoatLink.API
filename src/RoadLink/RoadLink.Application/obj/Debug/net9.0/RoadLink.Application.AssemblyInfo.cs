@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RoadLink.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1c63f691e7172adae57467e015ef585f8c36a0d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0b99840dd16f53f84df954f13500ea4358a797c")]
 [assembly: System.Reflection.AssemblyProductAttribute("RoadLink.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RoadLink.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

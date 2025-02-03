@@ -23,6 +23,11 @@ public sealed class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
         builder.Property(u => u.Email).HasMaxLength(400)
             .HasConversion(email => email!.Value, value => new Domain.Usuarios.Email(value));
 
+        builder.Property(u => u.PasswordHash).HasMaxLength(2000).HasConversion(passwordHash => passwordHash!.Value, value => new PasswordHash(value));
+        
         builder.HasIndex(usuario => usuario.Email).IsUnique();
+
+        builder.HasMany(x => x.Roles).WithMany().UsingEntity<UserRole>();
+
     }
 }

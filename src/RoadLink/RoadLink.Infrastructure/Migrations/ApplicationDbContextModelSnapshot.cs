@@ -25,7 +25,6 @@ namespace RoadLink.Infrastructure.Migrations
             modelBuilder.Entity("RoadLink.Domain.Alquileres.Alquiler", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -53,11 +52,11 @@ namespace RoadLink.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status");
 
-                    b.Property<Guid>("UsuarioId")
+                    b.Property<Guid?>("UsuarioId")
                         .HasColumnType("uuid")
                         .HasColumnName("usuario_id");
 
-                    b.Property<Guid>("VehiculoId")
+                    b.Property<Guid?>("VehiculoId")
                         .HasColumnType("uuid")
                         .HasColumnName("vehiculo_id");
 
@@ -76,16 +75,14 @@ namespace RoadLink.Infrastructure.Migrations
             modelBuilder.Entity("RoadLink.Domain.Comentarios.Comentario", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("AlquilerId")
+                    b.Property<Guid?>("AlquilerId")
                         .HasColumnType("uuid")
                         .HasColumnName("alquiler_id");
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)")
                         .HasColumnName("descripcion");
@@ -94,15 +91,15 @@ namespace RoadLink.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("fecha_hora_creacion");
 
-                    b.Property<int>("Rating")
+                    b.Property<int?>("Rating")
                         .HasColumnType("integer")
                         .HasColumnName("rating");
 
-                    b.Property<Guid>("UsuarioId")
+                    b.Property<Guid?>("UsuarioId")
                         .HasColumnType("uuid")
                         .HasColumnName("usuario_id");
 
-                    b.Property<Guid>("VehiculoId")
+                    b.Property<Guid?>("VehiculoId")
                         .HasColumnType("uuid")
                         .HasColumnName("vehiculo_id");
 
@@ -121,10 +118,138 @@ namespace RoadLink.Infrastructure.Migrations
                     b.ToTable("comentarios", (string)null);
                 });
 
+            modelBuilder.Entity("RoadLink.Domain.Permissions.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("text")
+                        .HasColumnName("nombre");
+
+                    b.HasKey("Id")
+                        .HasName("pk_permissions");
+
+                    b.ToTable("permissions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "ReadUser"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "WriteUser"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nombre = "UpdateUser"
+                        });
+                });
+
+            modelBuilder.Entity("RoadLink.Domain.Roles.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_roles");
+
+                    b.ToTable("roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Cliente"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("RoadLink.Domain.Roles.RolePermissions", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .HasColumnType("integer")
+                        .HasColumnName("role_id");
+
+                    b.Property<int>("PermissionID")
+                        .HasColumnType("integer")
+                        .HasColumnName("permission_id");
+
+                    b.HasKey("RoleID", "PermissionID")
+                        .HasName("pk_roles_permissions");
+
+                    b.HasIndex("PermissionID")
+                        .HasDatabaseName("ix_roles_permissions_permission_id");
+
+                    b.ToTable("roles_permissions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleID = 1,
+                            PermissionID = 1
+                        },
+                        new
+                        {
+                            RoleID = 2,
+                            PermissionID = 2
+                        },
+                        new
+                        {
+                            RoleID = 2,
+                            PermissionID = 3
+                        },
+                        new
+                        {
+                            RoleID = 2,
+                            PermissionID = 1
+                        });
+                });
+
+            modelBuilder.Entity("RoadLink.Domain.Usuarios.UserRole", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer")
+                        .HasColumnName("role_id");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("usuario_id");
+
+                    b.HasKey("RoleId", "UserId")
+                        .HasName("pk_user_role");
+
+                    b.HasIndex("UsuarioId")
+                        .HasDatabaseName("ix_user_role_usuario_id");
+
+                    b.ToTable("user_role", (string)null);
+                });
+
             modelBuilder.Entity("RoadLink.Domain.Usuarios.Usuario", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -143,6 +268,11 @@ namespace RoadLink.Infrastructure.Migrations
                         .HasColumnType("character varying(200)")
                         .HasColumnName("nombre");
 
+                    b.Property<string>("PasswordHash")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("password_hash");
+
                     b.HasKey("Id")
                         .HasName("pk_usuario");
 
@@ -156,12 +286,10 @@ namespace RoadLink.Infrastructure.Migrations
             modelBuilder.Entity("RoadLink.Domain.Vehiculos.Vehiculo", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.PrimitiveCollection<int[]>("Accesorio")
-                        .IsRequired()
                         .HasColumnType("integer[]")
                         .HasColumnName("accesorio");
 
@@ -196,16 +324,12 @@ namespace RoadLink.Infrastructure.Migrations
                     b.HasOne("RoadLink.Domain.Usuarios.Usuario", null)
                         .WithMany()
                         .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_alquileres_usuario_usuario_id");
 
                     b.HasOne("RoadLink.Domain.Vehiculos.Vehiculo", null)
                         .WithMany()
                         .HasForeignKey("VehiculoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_alquileres_vehiculo_vehiculo_id");
+                        .HasConstraintName("fk_alquileres_vehiculos_vehiculo_id");
 
                     b.OwnsOne("RoadLink.Domain.Shared.Moneda", "Accesorios", b1 =>
                         {
@@ -328,8 +452,7 @@ namespace RoadLink.Infrastructure.Migrations
 
                     b.Navigation("Accesorios");
 
-                    b.Navigation("DuracionAlquiler")
-                        .IsRequired();
+                    b.Navigation("DuracionAlquiler");
 
                     b.Navigation("PrecioMantenimiento");
 
@@ -343,23 +466,51 @@ namespace RoadLink.Infrastructure.Migrations
                     b.HasOne("RoadLink.Domain.Alquileres.Alquiler", null)
                         .WithMany()
                         .HasForeignKey("AlquilerId")
+                        .HasConstraintName("fk_comentarios_alquileres_alquiler_id");
+
+                    b.HasOne("RoadLink.Domain.Usuarios.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .HasConstraintName("fk_comentarios_usuario_usuario_id");
+
+                    b.HasOne("RoadLink.Domain.Vehiculos.Vehiculo", null)
+                        .WithMany()
+                        .HasForeignKey("VehiculoId")
+                        .HasConstraintName("fk_comentarios_vehiculos_vehiculo_id");
+                });
+
+            modelBuilder.Entity("RoadLink.Domain.Roles.RolePermissions", b =>
+                {
+                    b.HasOne("RoadLink.Domain.Permissions.Permission", null)
+                        .WithMany()
+                        .HasForeignKey("PermissionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_comentarios_alquileres_alquiler_id");
+                        .HasConstraintName("fk_roles_permissions_permissions_permission_id");
+
+                    b.HasOne("RoadLink.Domain.Roles.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_roles_permissions_roles_role_id");
+                });
+
+            modelBuilder.Entity("RoadLink.Domain.Usuarios.UserRole", b =>
+                {
+                    b.HasOne("RoadLink.Domain.Roles.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_role_roles_role_id");
 
                     b.HasOne("RoadLink.Domain.Usuarios.Usuario", null)
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_comentarios_usuario_usuario_id");
-
-                    b.HasOne("RoadLink.Domain.Vehiculos.Vehiculo", null)
-                        .WithMany()
-                        .HasForeignKey("VehiculoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_comentarios_vehiculo_vehiculo_id");
+                        .HasConstraintName("fk_user_role_usuario_usuario_id");
                 });
 
             modelBuilder.Entity("RoadLink.Domain.Vehiculos.Vehiculo", b =>
